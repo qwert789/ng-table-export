@@ -18,7 +18,7 @@ angular.module('ngTableExport', [])
                 },
                 generate: function() {
                     data = '';
-                    var rows = element.find('tr');
+                    var rows = element.find('thead tr,tbody tr');
                     angular.forEach(rows, function(row, i) {
                         var tr = angular.element(row),
                             tds = tr.find('th'),
@@ -29,12 +29,12 @@ angular.module('ngTableExport', [])
                         if (tds.length == 0) {
                             tds = tr.find('td');
                         }
-                        if (i != 1) {
-                            angular.forEach(tds, function(td, i) {
-                                rowData += csv.stringify(angular.element(td).text()) + ';';
-                            });
-                            rowData = rowData.slice(0, rowData.length - 1); //remove last semicolon
-                        }
+
+                        angular.forEach(tds, function (td, i) {
+                            rowData += csv.stringify(angular.element(td).text()) + ';';
+                        });
+                        rowData = rowData.slice(0, rowData.length - 1); //remove last semicolon
+
                         data += rowData + "\n";
                     });
                 },
